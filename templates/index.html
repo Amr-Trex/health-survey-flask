@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- so it seems like we cannot import the css file directly, but instead we need to use url_for which is a flask function that returns the path to the static folder -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <title>Health Survey</title>
+</head>
+<body>
+    <main>
+
+        <form id="my-form" action="/submit" method="post">
+            <fieldset><legend>Health Survey</legend>
+                <p style="text-align: center; text-decoration: wavy;">Fill out the survey below to get your health score.<br> The results of the this survey will be sent to your email.</p>
+                
+                <fieldset class="sub-field"><legend>General Info </legend>
+                    <question>
+                        <label for="name" class="question required">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </question>
+
+                    <question>
+                        <label for="age" class="question">Age:</label>
+                        <input type="number" id="age" name="age" min="1" max="99" placeholder="Age">
+                    </question>
+    
+                    <question>
+                        <label for="email" class="question required">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </question>
+                </fieldset>
+
+                <fieldset class="sub-field"><legend>General Symptoms</legend>
+                    <question>
+                        <label class="question required">Do you have a fever? If yes, how high has it been?</label>
+                         <div class="radio-group">
+                             <label for="fever1">Yes, strongly<input type="radio" id="fever1" name="fever" value=3 required></label>
+                             <label for="fever2">Yes, but slightly<input type="radio" id="fever2" name="fever" value=2 required></label>
+                             <label for="fever3">No<input type="radio" id="fever3" name="fever" value=1 required></label>
+                         </div>
+                    </question>
+
+                    <question>
+                        <label class="question required">Are you experiencing chills or sweating?</label>
+                        <div class="radio-group">
+                            <label for="chills_sweating1">None<input type="radio" id="chills_sweating1" name="chills_sweating" value=1 required></label>
+                            <label for="chills_sweating2">Chills<input type="radio" id="chills_sweating2" name="chills_sweating" value=2 required></label>
+                            <label for="chills_sweating3">Sweating<input type="radio" id="chills_sweating3" name="chills_sweating" value=3 required></label>
+                            <label for="chills_sweating4">Both, chills and sweating<input type="radio" id="chills_sweating4" name="chills_sweating" value=4 required></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question required">Do you feel extreme fatigue or body aches?</label>
+                        <div class="radio-group">
+                            <label for="fatigue1">None<input type="radio" id="fatigue1" name="fatigue" value=1 required></label>
+                            <label for="fatigue2">Fatigue in Muscles<input type="radio" id="fatigue2" name="fatigue" value=2 required></label>
+                            <label for="fatigue3">Chest pain<input type="radio" id="fatigue3" name="fatigue" value=3 required></label>
+                            <label for="fatigue4">Both, fatigue and chest pain<input type="radio" id="fatigue4" name="fatigue" value=4 required></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question required">Do you have a headache or eye pain?</label>
+                        <div class="radio-group">
+                            <label for="headaches_eyes1">None<input type="radio" id="headaches_eyes1" name="headaches_eyes" value=1 required></label>
+                            <label for="headaches_eyes2">Headaches only<input type="radio" id="headaches_eyes2" name="headaches_eyes" value=2 required></label>
+                            <label for="headaches_eyes3">Eye pain only<input type="radio" id="headaches_eyes3" name="headaches_eyes" value=3 required></label>
+                            <label for="headaches_eyes4">Both, headaches and eye pain<input type="radio" id="headaches_eyes4" name="headaches_eyes" value=4 required></label>
+                        </div>
+                    </question>
+
+                </fieldset>
+                
+                <fieldset class="sub-field"><legend>Respiratory Symptoms</legend>
+                    <question>
+                        <label class="question required">Do you have a sore throat?</label>
+                        <div class="radio-group">
+                            <label for="sore_throat1">None<input type="radio" id="sore_throat1" name="sore_throat" value=1 required></label>
+                            <label for="sore_throat2">Yes<input type="radio" id="sore_throat2" name="sore_throat" value=2 required></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question required">Are you coughing? If yes, is it dry or productive (with mucus)?</label>
+                        <div class="radio-group">
+                            <label for="cough1">None<input type="radio" id="cough1" name="cough" value=1 required></label>
+                            <label for="cough2">Dry cough<input type="radio" id="cough2" name="cough" value=2 required></label>
+                            <label for="cough3">Productive cough<input type="radio" id="cough3" name="cough" value=3 required></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question required">Do you have nasal congestion or a runny nose?</label>
+                        <div class="radio-group">
+                            <label for="nasal_congestion1">None<input type="radio" id="nasal_congestion1" name="nasal_congestion" value=1 required></label>
+                            <label for="nasal_congestion2">Yes, nasal congestion<input type="radio" id="nasal_congestion2" name="nasal_congestion" value=2 required></label>
+                            <label for="nasal_congestion3">Yes, runny nose<input type="radio" id="nasal_congestion3" name="nasal_congestion" value=3 required></label>
+                            <label for="nasal_congestion4">Both, nasal congestion and runny nose<input type="radio" id="nasal_congestion4" name="nasal_congestion" value=4 required></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question required">Are you experiencing shortness of breath?</label>
+                        <div class="radio-group">
+                            <label for="shortness_breath1">None<input type="radio" id="shortness_breath1" name="shortness_breath" value=1 required></label>
+                            <label for="shortness_breath2">Yes, but rarely<input type="radio" id="shortness_breath2" name="shortness_breath" value=2 required></label>
+                            <label for="shortness_breath3">Yes, very often<input type="radio" id="shortness_breath3" name="shortness_breath" value=3 required></label>
+
+                        </div>
+                    </question>
+                </fieldset>
+
+                <fieldset class="sub-field"><legend>Gastrointestinal Symptoms</legend>
+                    <question>
+                        <label class="question required">Do you feel nauseous or have vomiting?</label>
+                        <div class="radio-group">
+                            <label for="nausea1">None<input type="radio" id="nausea1" name="nausea" value=0 required></label>
+                            <label for="nausea2">Yes<input type="radio" id="nausea2" name="nausea" value=1 required></label>
+                        </div>
+                    </question>
+                    <question>
+                        <label class="question required">Are you experiencing diarrhea?</label>
+                        <div class="radio-group">
+                            <label for="diarrhea1">None<input type="radio" id="diarrhea1" name="diarrhea" value=0 required></label>
+                            <label for="diarrhea2">Yes<input type="radio" id="diarrhea2" name="diarrhea" value=1 required></label>
+                        </div>
+                    </question>
+                </fieldset>
+
+                <fieldset class="sub-field"><legend>Additional Risk Factors</legend>
+                    <question>
+                        <label class="question">How long have these symptoms lasted?</label>
+                        <div class="radio-group">
+                            <label for="symptom_length1">Less than 3 days<input type="radio" id="symptom_length1" name="symptom_length" value=1></label>
+                            <label for="symptom_length2">3-7 days<input type="radio" id="symptom_length2" name="symptom_length" value=2></label>
+                            <label for="symptom_length3">More than 7 days<input type="radio" id="symptom_length3" name="symptom_length" value=3></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question">Are your symptoms getting worse or staying the same?</label>
+                        <div class="radio-group">
+                            <label for="symptom_worse1">Worse<input type="radio" id="symptom_worse1" name="symptom_worse" value=2></label>
+                            <label for="symptom_worse2">Same<input type="radio" id="symptom_worse2" name="symptom_worse" value=1></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question required">Do you have any chronic illnesses, such as asthma, diabetes, or heart disease?</label>
+                        <div class="radio-group">
+                            <label for="chronic_illnesses1">None<input type="radio" id="chronic_illnesses1" name="chronic_illnesses" value=1 required></label>
+                            <label for="chronic_illnesses2">Yes<input type="radio" id="chronic_illnesses2" name="chronic_illnesses" value=2 required></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question">Have you been in close contact with someone having flu? How long has it been ever since then?</label>
+                        <div class="radio-group">
+                            <label for="close_contact1">None<input type="radio" id="close_contact1" name="close_contact" value=1></label>
+                            <label for="close_contact2">Yes, more than a week or so<input type="radio" id="close_contact2" name="close_contact" value=2></label>
+                            <label for="close_contact3">Yes, lesser than 5 days<input type="radio" id="close_contact3" name="close_contact" value=3></label>
+                            <label for="close_contact4">Yes, less than a day<input type="radio" id="close_contact4" name="close_contact" value=4></label>
+
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question">Have you received a flu vaccine this season?</label>
+                        <div class="radio-group">
+                            <label for="flu_vaccine1">No<input type="radio" id="flu_vaccine1" name="flu_vaccine" value=1></label>
+                            <label for="flu_vaccine2">Yes<input type="radio" id="flu_vaccine2" name="flu_vaccine" value=2></label>
+                        </div>
+                    </question>
+
+                    <question>
+                        <label class="question">Would you like to add any additional information? (Optional)</label>
+                        <input type="text" id="additional_info" name="additional_info" placeholder="Type here..." style="width: 100%; padding: 5px;">
+                    </question>
+                </fieldset><br>
+                
+    
+                <input py-click="handle_form" class="submit-button" type="submit" id="submitButton" value="Submit">
+            </fieldset>
+            <span id="some_element"></span>
+        </form>
+    </main>
+
+
+    <!-- <py-script>
+        from js import console, document
+
+        def handle_form(*args, **kwargs):
+            name = document.getElementById('name').value
+            age = document.getElementById('age').value
+            email = document.getElementById('email').value
+
+            some_question = document.getElementsByTagName('nausea').valueOf()
+            for i in some_question:
+                print(i)
+
+            target = document.getElementById('some_element')
+            print("hello")
+            print(name, age, email)
+
+            print(some_question)
+
+    </py-script> -->
+
+    
+
+    <!-- <py-script>
+        from js import console, document
+        from pyodide import create_proxy
+    
+        def handle_form(event):
+            # Prevent default form submission
+            event.preventDefault()
+    
+            # Get form data
+            form = document.getElementById("my-form")
+            form_data = {element.name: element.value for element in form.elements if element.name}
+            
+            # Log the form data
+            console.log(form_data)
+    
+        # Add event listener to the form
+        form = document.getElementById("my-form")
+        form.addEventListener("submit", create_proxy(handle_form))
+    </py-script> -->
+
+    <!-- <py-script src="main.py"></py-script> -->
+
+    <!-- <py-script>
+        from js import console, document
+
+        # Function to process form data
+        def process_form(event):
+            
+            # Get input values from the form
+            form = document.getElementById('my-form')
+            name = form.elements['name'].value
+            age = form.elements['age'].value
+            print(name, age)
+            print("Hello")
+            # Generate a response
+            result = f"Hello {name}, you are {age} years old!"
+            
+            console.log(result)
+
+        # Attach the function to the button
+        document.getElementById('submitButton').addEventListener('click', process_form)
+    </py-script> -->
+
+
+    
+</body>
+</html>
+<!-- <script>
+    document.getElementById("my-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form data
+        let form = document.getElementById("my-form");
+        let formData = new FormData(form);
+
+        const extractedData =  Object.fromEntries(formData)
+        console.log(extractedData);
+    });
+</script> -->

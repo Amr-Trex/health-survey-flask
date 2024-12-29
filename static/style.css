@@ -1,0 +1,140 @@
+main {
+    background: linear-gradient(135deg, #2c3e50, purple);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+    color: aliceblue;
+    font-family: 'ubuntu', sans-serif;
+    font-weight: 500;
+    overflow: auto;
+}
+
+legend {
+    font-size: 30px;
+    font-style: italic;
+}
+
+fieldset {
+    border: 4px solid #2c3e50;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+fieldset.sub-field {
+    border-width: 2px;
+}
+
+fieldset.sub-field legend {
+    font-size: 20px;
+}
+
+form {
+    width: 100%;
+    max-width: 750px;
+    min-width: 414px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    
+}
+
+question {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+
+question label.question::before {
+    content: "Q" counter(question, number) ". ";
+    color: #999;
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+    font-weight: 700;
+}
+/* so we create a custom counter and increment it with each question */
+question {
+    counter-increment: question;
+}
+
+question label.question.required::after {
+    content: " *";
+    color: rgb(234, 83, 83);
+}
+
+.submit-button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #2c3e50, purple);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background: linear-gradient(135deg, #33577a, rgb(139, 34, 139));
+    transform: scale(1.015);
+    box-shadow: 8px 8px 0 rgba(102, 3, 138, 0.717);
+    transition: all 0.155s ease-in-out;
+}
+
+.submit-button:active {
+    background: linear-gradient(-135deg, #33577a, rgb(139, 34, 139));
+    transform: scale(0.95);
+    box-shadow: none;
+    transition: all 0.155s ease-in-out;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: 30px;
+}
+
+.radio-group label {
+    cursor: pointer;
+    font-weight: 300;
+}
+
+
+.radio-group label::before {
+    content: counter(label, lower-alpha) ".";
+    color: #999;
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+    font-weight: 700;
+}
+/* so we create a custom counter and increment it with each question */
+.radio-group label{
+    counter-increment: label;
+}
+
+input[type="text"], input[type="email"], input[type="number"], input[type="password"], textarea {
+    padding: 3px 5px;
+    border-radius: 10px;
+}
